@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Modal, TouchableHighlight} from 'react-native'
 
 const GoalItem = props => {
     return(
