@@ -1,35 +1,34 @@
 import 'react-native-gesture-handler';
-import 'react-native-gesture-handler';
 
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-//import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import FirstPage from './pages/FirstPage';
 import SecondPage from './pages/SecondPage';
 import ThirdPage from './pages/ThirdPage';
 import FourthPage from './pages/FourthPage';
-
+import RootStackScreen from './screens/RootStackScreen';
 
 const Stack = createStackNavigator();
-const Tab = createMaterialTopTabNavigator();
+const Tab = createBottomTabNavigator();
+
 
 function TabStack() {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
       tabBarOptions={{
-        activeTintColor: '#FFFFFF',
-        inactiveTintColor: '#F8F8F8',
-        style: {
-          backgroundColor: '#d2b48c',
-        },
+        activeTintColor: '#000',
+        activeBackgroundColor: '#87B56A',
+        inactiveTintColor: '#87B56A',
         labelStyle: {
           textAlign: 'center',
+          textAlignVertical: 'center',
+          justifyContent: 'space-between',
           fontWeight: 'bold',
-          fontSize: 12
+          fontSize: 15
         },
         indicatorStyle: {
           borderBottomColor: '#87B56A',
@@ -49,28 +48,20 @@ function TabStack() {
         name="SecondPage"
         component={SecondPage}
         options={{
-          tabBarLabel: 'Master Class',
-          // tabBarIcon: ({ color, size }) => (
-          //   <MaterialCommunityIcons name="settings" color={color} size={size} />
-          // ),
+          tabBarLabel: 'Master Class'
         }} />
         <Tab.Screen
         name="ThirdPage"
         component={ThirdPage}
         options={{
           tabBarLabel: 'Mentoring',
-          // tabBarIcon: ({ color, size }) => (
-          //   <MaterialCommunityIcons name="home" color={color} size={size} />
-          // ),
-        }}  />
+        }} 
+         />
         <Tab.Screen
         name="FourthPage"
         component={FourthPage}
         options={{
           tabBarLabel: 'More',
-          // tabBarIcon: ({ color, size }) => (
-          //   <MaterialCommunityIcons name="home" color={color} size={size} />
-          // ),
         }}  />
     </Tab.Navigator>
   );
@@ -79,15 +70,17 @@ function TabStack() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      <RootStackScreen/>
+      {/* <Stack.Navigator
         initialRouteName="FirstPage"
         screenOptions={{
-          headerStyle: { backgroundColor: '#5c4033' },
+          headerStyle: { backgroundColor: '#87B56A' },
           headerTintColor: '#fff',
           headerTitleStyle: { fontWeight: 'normal' }
         }}>
         <Stack.Screen name="TabStack" component={TabStack} options={{ title: 'IWEC Foundation' }}/>
-      </Stack.Navigator>
+      </Stack.Navigator> */}
+    
     </NavigationContainer>
   );
 }
