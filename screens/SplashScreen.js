@@ -7,20 +7,22 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import * as Animatable from 'react-native-animatable'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import LinearGradient from 'react-native-linear-gradient'
 
-const SplashScreen = () => {
+const SplashScreen = ({navigation}) => {
     return(
         <View style = {styles.container}>
             <View style={styles.header}>
-                <Image
+                <Animatable.Image
+                    animation ="bounce"
                 source = {require('../assets/logo.png')}
                 style = {styles.logo}
                 resizeMode = "stretch"
                 />
             </View>
-            <View 
+            <Animatable.View 
                 style = 
                 {{backgroundColor: '#fff', 
                 flex: 1,
@@ -28,16 +30,24 @@ const SplashScreen = () => {
                 borderTopRightRadius: 30,
                 paddingVertical: 50,
                 paddingHorizontal: 30} }
+                animation = "fadeInUpBig"
             >
-                <Text style = {styles.title}>Stay connected with everyone!</Text>
+                <Text style = {styles.title}>Learn, Connect, and Create!</Text>
                 <Text style = {styles.text}>Sign in with account</Text>
                 <View style = {styles.button}>
                 <TouchableOpacity
-                    onPress = {()=> alert('Click')}>
-                        <Text style = {styles.textSign}>Get Started</Text>
+                    onPress={() => navigation.navigate('SignInScreen')}>
+                        <View style = {styles.signIn}>
+                            <Text style = {styles.textSign}> Get Started  > </Text>
+                        </View>
                 </TouchableOpacity>
                 </View>
-            </View>
+                <Button title = "** Go to app"
+                    onPress = {()=> navigation.navigate('SignUpScreen')}>
+
+                </Button>
+
+            </Animatable.View>
         </View>
     );
 };
@@ -90,21 +100,24 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         marginTop: 30
     },
-    signIn: {
-        width: 150,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 50,
-        flexDirection: 'row'
-    },
     textSign: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 15,
-        backgroundColor: '#3CB371',
-        paddingVertical: 10,
-        paddingHorizontal: 9,
-        borderColor: 'black'
+        fontSize: 18,
+        color: '#fff'
+        },
+    signIn: {
+            height: 30,
+            marginTop: 15,
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignContent: 'center',
+            borderRadius: 10,
+            backgroundColor: '#D2B48C',
+            color: '#fff'
+        },
+    textSign: {
+        fontSize: 18,
+        color: '#fff',
+        fontWeight: 'bold'
         }
   });

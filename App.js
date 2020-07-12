@@ -1,26 +1,29 @@
 import 'react-native-gesture-handler';
 
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import FirstPage from './pages/FirstPage';
-import SecondPage from './pages/SecondPage';
-import ThirdPage from './pages/ThirdPage';
-import FourthPage from './pages/FourthPage';
+import FirstPage from './screens/FirstPage';
+import SecondPage from './screens/SecondPage';
+import ThirdPage from './screens/ThirdPage';
+import FourthPage from './screens/FourthPage';
 import RootStackScreen from './screens/RootStackScreen';
+import { View, ActivityIndicator } from 'react-native';
+
+import {AuthContext} from './components/context';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
 
 function TabStack() {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
       tabBarOptions={{
-        activeTintColor: '#000',
+        activeTintColor: '#fff',
         activeBackgroundColor: '#87B56A',
         inactiveTintColor: '#87B56A',
         labelStyle: {
@@ -40,9 +43,6 @@ function TabStack() {
         component={FirstPage}
         options={{
           tabBarLabel: 'Chambers',
-          // tabBarIcon: ({ color, size }) => (
-          //   <MaterialCommunityIcons name="home" color={color} size={size} />
-          // ),
         }}  />
       <Tab.Screen
         name="SecondPage"
@@ -68,20 +68,56 @@ function TabStack() {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [userToken, setUserToken] = React.useState(null); 
+
+  const authContext = React.useMemo(() => ({
+    signIn: () => {
+      setUserToken('fghk');
+      setIsLoading(false);
+    },
+    signOut: () => {
+      setUserToken(null);
+      setIsLoading(false);
+    },
+    signUp: () => {
+      setUserToken('fghk');
+      setIsLoading(false);
+    }
+  }));
+
+  
+  useEffect(() => {
+    setTimeout(() =>
+      {setIsLoading(false);
+      }, 1000);
+  }, []);
+  if(isLoading){
+    return(
+      <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center'}}w>
+        <ActivityIndicator size = "large"/>
+      </View>
+    );
+  }
   return (
-    <NavigationContainer>
-      <RootStackScreen/>
-      {/* <Stack.Navigator
-        initialRouteName="FirstPage"
-        screenOptions={{
-          headerStyle: { backgroundColor: '#87B56A' },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'normal' }
-        }}>
-        <Stack.Screen name="TabStack" component={TabStack} options={{ title: 'IWEC Foundation' }}/>
-      </Stack.Navigator> */}
-    
-    </NavigationContainer>
+    <AuthContext.Provider value = {authContext}>
+      <NavigationContainer>
+        {userToken != null ? (
+          <Stack.Navigator
+            initialRouteName="FirstPage"
+            screenOptions={{
+              headerStyle: { backgroundColor: '#87B56A' },
+              headerTintColor: '#fff',
+              headerTitleStyle: { fontWeight: 'normal' }
+            }}>
+            <Stack.Screen name="TabStack" component={TabStack} options={{ title: 'IWEC Foundation' }}/>
+          </Stack.Navigator>
+          ) 
+        :
+        <RootStackScreen/>
+      }
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 
