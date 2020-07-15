@@ -42,11 +42,6 @@ const SplashScreen = ({navigation}) => {
                         </View>
                 </TouchableOpacity>
                 </View>
-                <Button title = "** Go to app"
-                    onPress = {()=> navigation.navigate('SignUpScreen')}>
-
-                </Button>
-
             </Animatable.View>
         </View>
     );
